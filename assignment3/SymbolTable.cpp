@@ -5,7 +5,7 @@ void assignExistedElement (string, string, HashTable&) ;
 void lookupElementInScope (string, string, HashTable&);
 int callExpression (string, string, HashTable&, int&);
 int nonvoidFuntion (string line, string function, HashTable& table, int& total);
-int fill_paraType (string line, HashTable &table,int size, string *&array, Element &ele, string parameter);
+int fill_paraType (string line, HashTable &table,int size, string *&arr, Element &ele, string parameter);
 void removeAllNodeInScope (string, HashTable&, int scope);
 
 string getFirstSplitString (string line)
@@ -298,7 +298,7 @@ void removeAllNodeInScope (string line, HashTable& table, int scope)
     table.deleteScope(scope);
 }
 
-int fill_paraType (string line, HashTable &table,int size, string *&array, Element &ele, string parameter) {
+int fill_paraType (string line, HashTable &table,int size, string *&arr, Element &ele, string parameter) {
     int total = 0;
     for (int i=0;i<size;i++) {
         size_t comma = parameter.find(",");
@@ -314,16 +314,16 @@ int fill_paraType (string line, HashTable &table,int size, string *&array, Eleme
             eachpara = parameter;
         }
             if (isString(eachpara)) {
-                if (array[i] == "" )    array[i] = "string";
-                else if (array[i] != "string") {
+                if (arr[i] == "" )    arr[i] = "string";
+                else if (arr[i] != "string") {
                     throw TypeMismatch (line);
                 }
 
             }
                 
             else if (isNumber(eachpara)) {
-                if (array[i] == "")   array[i] = "number";
-                else if (array[i] != "number") {
+                if (arr[i] == "")   arr[i] = "number";
+                else if (arr[i] != "number") {
                     throw TypeMismatch (line);
                 }
             }
@@ -340,16 +340,16 @@ int fill_paraType (string line, HashTable &table,int size, string *&array, Eleme
                 if (ele.num_of_parameters >= 0) {
                     throw TypeMismatch (line);
                 }
-                if (eleType == "" && array[i] == "") {
+                if (eleType == "" && arr[i] == "") {
                     throw TypeCannotBeInferred (line);
                 }
                 if (eleType == "") {
-                    table.opAdress[index].type = array[i];
+                    table.opAdress[index].type = arr[i];
                 }
-                else if (array[i] == "") {
-                    array[i] = eleType;
+                else if (arr[i] == "") {
+                    arr[i] = eleType;
                 }
-                else if (array[i] != eleType)
+                else if (arr[i] != eleType)
                 {
                     throw TypeMismatch(line);
                 }
